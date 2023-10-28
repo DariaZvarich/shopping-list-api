@@ -10,10 +10,20 @@ const ShoppingList = () => {
         .catch((error) => console.error('Error fetching data:', error));
     }, []);
 
-    if (items === null) return <div>loading ...</div>;
+    if (items === null || items === undefined){
+        return <div>loading ...</div>;
+    }
+
+    if (items.length < 1) {
+        return (
+            <div>
+                You have no items
+            </div>
+        )
+    }
 
     return (
-        <div> 
+        <div>
             {items.map((item) => (
                 <div key={item.id}>{item.name}</div>
             ))}    

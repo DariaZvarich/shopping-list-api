@@ -31,7 +31,9 @@ router.get('/', async(req, res) => {
 
     try {
         const items = await Item.find();
-        res.json(items);
+        res.json({
+            items: items
+        });
     } catch (error) {
         res.status(500).json({error: 'Internal Server Error'});
     }
