@@ -27,7 +27,7 @@ const ShoppingList = () => {
         const deleteItem = items.filter((item) => item.id !== id);
         setItems(deleteItem);
     }
-    function handleAddButtonClick(id){
+    function handleAddButtonClick(){
         const newItem = {
             id: items.length + 1,
             name: name,
@@ -37,24 +37,39 @@ const ShoppingList = () => {
         setItems([...items, newItem]);
         setName('');
     }
+    function toggleComplete(index){
+        const updateItem = [...items];
+        updateItem[index].isSelected = !updateItem[index].isSelected;
+        setItems(updateItem);
+
+    }
+
+    function handleQuantityIncrease(index){
+        const increaseItem = [...items];
+        increaseItem[index].quantity++;
+        setItems(increaseItem);
+    }
 
     return (
+        <div className='item-name'> 
         <div>
             <input type = "text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter Item name' />
-            <button onClick={handleAddButtonClick}> Add Item </button>
+            <button onClick={handleAddButtonClick}> Add Item 
+            </button>
             <ul>
-            {items.map((item) => (
+            {items.map((item, index) => (
                 <li key={item.id}>
-                <span>{item.name}</span>
+                <span style={{ textDecoration: item.isSelected ? 'line-through' : 'none' }}
+                                onClick={() => toggleComplete(index)}>
+                {item.name}
+                </span>
                 <button type="button" onClick={() => handleRemove(item.id)}>
                     Remove
-                </button>
-                <button>
-                    Add Item
                 </button>
                 </li>
             ))}
             </ul>
+        </div>
         </div>
       );
 };
